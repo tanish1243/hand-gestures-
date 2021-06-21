@@ -25,8 +25,39 @@ function modelloaded(){
 }
 function speak(){
     synth= window.speechSynthesis;
-    speakdata1="The first prediction is"+ prediction_1;
-    speakdata2="The second prediction is"+ prediction_2;
-    utterThis= new SpeechSynthesisUtterance(speakdata1 + speakdata2);
+    speakdata1="The  prediction is "+ prediction_1;
+    
+    utterThis= new SpeechSynthesisUtterance(speakdata1 );
     synth.speak(utterThis);
+}
+function check(){
+    img= document.getElementById("snapshot");
+    classifier.classify(img,gotResult);
+}
+function gotResult(error,results){
+    if (error){
+        console.log(error);
+
+    }
+    else{
+        console.log(results);
+        document.getElementById("result1").innerHTML= results[0].label;
+        
+        prediction_1= results[0].label;
+        
+        speak();
+        if(results[0].label== "ok sign"){
+            document.getElementById("resultemoji1").innerHTML= "&#128076;";
+        }
+        if(results[0].label== "hi fi"){
+            document.getElementById("resultemoji1").innerHTML= "&#128532;";
+        }
+        if(results[0].label== "fist"){
+            document.getElementById("resultemoji1").innerHTML= "&#128546;";
+        }
+        
+        
+
+    }
+
 }
